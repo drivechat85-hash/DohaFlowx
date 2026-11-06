@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DohaFlow – Smarter school runs for Doha</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#F5F2F4;--surf:#fff;--ink:#1E1620;--mute:#6B5F69;--line:#E4DCE1;--mar:#8A1538;--mar2:#6E102D;--teal:#0E7C86;--gold:#B98A1E;--ok:#177A4B;--warn:#B45309;--bad:#B42318;--r:14px;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#150D13;--surf:#21161D;--ink:#F4ECF0;--mute:#B0A0AB;--line:#38282F;--mar:#E0587F;--mar2:#C93F68;--teal:#3CC1CC;--gold:#E3B552;--ok:#4CC38A;--warn:#F0A04B;--bad:#F27C70;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#150D13;--surf:#21161D;--ink:#F4ECF0;--mute:#B0A0AB;--line:#38282F;--mar:#E0587F;--mar2:#C93F68;--teal:#3CC1CC;--gold:#E3B552;--ok:#4CC38A;--warn:#F0A04B;--bad:#F27C70;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 "DM Sans",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",sans-serif;line-height:1.1;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(34px,6vw,60px);font-weight:800}h2{font-size:clamp(24px,3.4vw,34px);font-weight:700}h3{font-size:18px;font-weight:700}
+p{margin:0}a{color:inherit}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{max-width:1120px;margin:auto;padding:10px 20px;display:flex;align-items:center;gap:18px}
+.logo{font:800 22px "Bricolage Grotesque",sans-serif;text-decoration:none;display:flex;align-items:center;gap:9px}
+.logo i{width:30px;height:30px;border-radius:9px;background:var(--mar);display:grid;place-items:center;color:#fff;font-style:normal;font-size:14px}
+.logo b{color:var(--mar)}
+nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto}
+nav a{padding:8px 13px;border-radius:99px;text-decoration:none;color:var(--mute);font-weight:500;white-space:nowrap;font-size:14px}
+nav a:hover{color:var(--ink)}nav a.on{background:var(--mar);color:#fff}
+main{max-width:1120px;margin:auto;padding:28px 20px 60px}
+.view{display:none}.view.on{display:block}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.muted{color:var(--mute)}.small{font-size:13px}
+.btn{border:0;border-radius:10px;padding:11px 18px;font:700 14px "DM Sans",sans-serif;cursor:pointer;background:var(--mar);color:#fff;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--mar2)}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}.btn.ghost:hover{border-color:var(--mar)}
+.btn:disabled{opacity:.6;cursor:default}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+label{display:block;font-weight:700;font-size:13px;margin:0 0 5px}
+select,input[type=time]{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.field{margin-bottom:14px}
+.chk{display:flex;gap:9px;align-items:center;font-weight:400;margin-bottom:8px}.chk input{accent-color:var(--mar);width:17px;height:17px}
+/* hero */
+.hero{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:center;padding:14px 0 30px}
+.hero p.lead{font-size:18px;color:var(--mute);margin:16px 0 22px;max-width:46ch}
+.demo{padding:22px}
+.lane{display:flex;flex-wrap:wrap;gap:5px;min-height:104px;align-content:flex-start;margin:14px 0}
+.car{width:26px;height:15px;border-radius:5px 7px 4px 4px;background:var(--mar);position:relative;transition:opacity .3s,transform .3s}
+.car::after{content:"";position:absolute;right:3px;top:3px;width:7px;height:5px;background:rgba(255,255,255,.7);border-radius:1px}
+.car.shared{background:var(--teal);opacity:.25;transform:scale(.8)}
+.gate{height:6px;background:repeating-linear-gradient(90deg,var(--gold) 0 14px,transparent 14px 22px);border-radius:3px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+input[type=range]{width:100%;accent-color:var(--mar)}
+.big{font:800 30px "Bricolage Grotesque",sans-serif}
+/* stats */
+.stat{padding:18px}.stat .big{display:block}.stat span{color:var(--mute);font-size:13px}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:color-mix(in srgb,var(--teal) 16%,transparent);color:var(--teal)}
+.tag.m{background:color-mix(in srgb,var(--mar) 14%,transparent);color:var(--mar)}.tag.g{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.tag.w{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.steps{counter-reset:s}.steps .card{position:relative}
+.steps .card::before{counter-increment:s;content:counter(s);position:absolute;top:-12px;left:18px;width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:800}
+.steps h3{margin-top:8px}.steps p{margin-top:6px}
+/* matcher */
+.split{display:grid;gap:20px;grid-template-columns:minmax(260px,340px) 1fr;align-items:start}
+@media(max-width:800px){.split{grid-template-columns:1fr}}
+.fam{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px;padding:16px 18px}
+.score{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px;background:conic-gradient(var(--teal) calc(var(--p)*1%),var(--line) 0);position:relative;flex:none}
+.score::after{content:attr(data-v);position:absolute;inset:5px;background:var(--surf);border-radius:50%;display:grid;place-items:center}
+.fam .info{flex:1;min-width:200px}.fam .meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--mute);margin-top:4px}
+.empty{text-align:center;padding:36px}
+/* slots */
+.slot{display:flex;flex-direction:column;gap:8px}
+.meter{height:9px;background:var(--line);border-radius:9px;overflow:hidden}.meter i{display:block;height:100%;border-radius:9px}
+.slot.mine{border-color:var(--teal);box-shadow:0 0 0 2px color-mix(in srgb,var(--teal) 30%,transparent)}
+.pass{display:none;gap:18px;align-items:center;margin-top:18px;border-color:var(--teal)}.pass.on{display:flex;flex-wrap:wrap}
+.pass svg{width:92px;height:92px;background:#fff;padding:6px;border-radius:8px;flex:none}
+/* sim */
+.res{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}.res:last-child{border:0}
+.res b{font-family:"Bricolage Grotesque",sans-serif;font-size:20px}
+.bars{display:flex;gap:6px;align-items:flex-end;height:110px;margin-top:10px}
+.bars div{flex:1;border-radius:6px 6px 0 0;background:var(--line);position:relative;transition:height .3s}
+.bars div.a{background:var(--mar)}.bars div.b{background:var(--teal)}
+/* faq */
+details{border-bottom:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:"+";font-size:20px;color:var(--mar)}details[open] summary::after{content:"–"}
+details p{margin-top:8px;color:var(--mute);max-width:70ch}
+.road{display:grid;gap:12px}.road div{display:flex;gap:12px;align-items:flex-start}
+footer{border-top:1px solid var(--line);padding:22px 20px;text-align:center;color:var(--mute);font-size:13px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:10px;font-weight:700;font-size:14px;opacity:0;transition:.25s;z-index:40;pointer-events:none;max-width:90vw}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+<a class="logo" href="#home"><i>DF</i><span>Doha<b>Flow</b></span></a>
+<nav aria-label="Main">
+<a href="#home" data-v="home">Home</a><a href="#carpool" data-v="carpool">Carpool matcher</a><a href="#slots" data-v="slots">Gate slots</a><a href="#impact" data-v="impact">Impact</a><a href="#about" data-v="about">About &amp; FAQ</a>
+</nav></div></header>
+
+<main>
+<!-- HOME -->
+<section id="v-home" class="view">
+<div class="hero">
+<div>
+<h1>The school run, without the school-gate jam.</h1>
+<p class="lead">DohaFlow matches nearby families into verified carpools and spreads drop-offs across short gate windows, so fewer cars arrive at the same minute.</p>
+<a class="btn" href="#carpool">Find a carpool</a> <a class="btn ghost" href="#about">How it works</a>
+</div>
+<div class="card demo">
+<div class="row"><h3>Try it: the gate queue at 6:55</h3><span class="tag m" id="d-cars">48 cars</span></div>
+<div class="lane" id="lane" aria-hidden="true"></div>
+<div class="gate"></div>
+<div class="field" style="margin:16px 0 4px"><label for="share">Families who carpool: <span id="d-pct">0%</span></label>
+<input type="range" id="share" min="0" max="80" value="0"></div>
+<p class="small muted" id="d-msg">Drag the slider to see how many cars leave the queue.</p>
+</div>
+</div>
+
+<div class="grid g3" style="margin-bottom:34px">
+<div class="card stat"><span>Active carpools</span><b class="big" id="s-groups">14</b></div>
+<div class="card stat"><span>Cars off the road</span><b class="big" id="s-cars">42</b></div>
+<div class="card stat"><span>Minutes saved per family</span><b class="big" id="s-delay">19</b></div>
+<div class="card stat"><span>CO₂ saved per day</span><b class="big" id="s-co2">96.6 kg</b></div>
+</div>
+
+<h2 style="margin-bottom:22px">How it works</h2>
+<div class="grid g3 steps" style="margin-bottom:34px">
+<div class="card"><h3>Tell us your run</h3><p class="muted">Pick your school, your area, and the drop-off time that suits you.</p></div>
+<div class="card"><h3>Meet verified families</h3><p class="muted">We rank nearby families by distance, timing, and grade, and show only parents the school has verified.</p></div>
+<div class="card"><h3>Reserve a gate window</h3><p class="muted">Book a 10-minute window and get a pass to show at the gate.</p></div>
+</div>
+
+<div class="card" style="display:flex;gap:18px;justify-content:space-between;align-items:center;flex-wrap:wrap">
+<div><h3>Aligned with Qatar National Vision 2030</h3><p class="muted" style="margin-top:6px;max-width:60ch">Less congestion, lower emissions, and stronger neighbourhood ties: a small habit change that supports a more sustainable Doha.</p></div>
+<a class="btn ghost" href="#impact">See the national impact</a>
+</div>
+</section>
+
+<!-- CARPOOL -->
+<section id="v-carpool" class="view">
+<h2>Carpool matcher</h2><p class="muted" style="margin:6px 0 20px">Matches are ranked by how well they fit your area, time, and grade.</p>
+<div class="split">
+<div class="card">
+<div class="field"><label for="school">School</label><select id="school"></select></div>
+<div class="field"><label for="zone">Your area</label><select id="zone"></select></div>
+<div class="field"><label for="time">Drop-off time</label><input type="time" id="time" value="06:45"></div>
+<div class="field"><label for="grade">Child’s grade</label><select id="grade"><option>Any</option><option>KG</option><option>1–5</option><option>6–8</option><option>9–12</option></select></div>
+<label class="chk"><input type="checkbox" id="f-ver" checked> Verified parents only</label>
+<label class="chk"><input type="checkbox" id="f-grade" checked> Prefer same grade band</label>
+<button class="btn" style="width:100%;margin-top:6px" id="go">Find matches</button>
+</div>
+<div>
+<div class="row" style="margin-bottom:12px"><h3 id="r-title">Matches</h3><span class="tag" id="r-count"></span></div>
+<div id="results"></div>
+</div>
+</div>
+</section>
+
+<!-- SLOTS -->
+<section id="v-slots" class="view">
+<h2>Gate slots</h2><p class="muted" style="margin:6px 0 20px">Each window fits a limited number of cars. Pick a quieter one and the queue shrinks for everyone.</p>
+<div class="grid g3" id="slot-list"></div>
+<div class="card pass" id="pass">
+<svg id="qr" viewBox="0 0 21 21" shape-rendering="crispEdges" aria-label="Gate pass code"></svg>
+<div><h3>Your gate pass</h3><p id="pass-t" class="muted"></p><p class="small muted" style="margin-top:6px">Pass ID <b id="pass-id"></b></p>
+<button class="btn ghost" id="cancel" style="margin-top:10px">Cancel reservation</button></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>Queue forecast</h3><p class="small muted">Expected cars at the gate, with your chosen window highlighted.</p><div class="bars" id="bars"></div></div>
+</section>
+
+<!-- IMPACT -->
+<section id="v-impact" class="view">
+<h2>Impact simulator</h2><p class="muted" style="margin:6px 0 20px">Estimate what happens if DohaFlow spreads across Doha’s schools.</p>
+<div class="grid g2">
+<div class="card">
+<div class="field"><div class="row"><label for="sc">Participating schools</label><b id="sc-v">10</b></div><input type="range" id="sc" min="1" max="50" value="10"></div>
+<div class="field"><div class="row"><label for="ad">Parent adoption</label><b id="ad-v">35%</b></div><input type="range" id="ad" min="10" max="90" value="35"></div>
+<div class="field"><div class="row"><label for="cp">Cars per school at peak</label><b id="cp-v">500</b></div><input type="range" id="cp" min="200" max="1000" step="50" value="500"></div>
+<p class="small muted">Assumptions: 180 school days, about 1 litre of fuel per car per day, 2.3 kg CO₂ per litre, and 21 kg CO₂ absorbed by one tree per year. These are estimates for planning, not measurements.</p>
+</div>
+<div class="card">
+<h3>Projected yearly impact</h3>
+<div class="res"><span>Cars removed each day</span><b id="o-cars"></b></div>
+<div class="res"><span>Fuel saved</span><b id="o-fuel"></b></div>
+<div class="res"><span>CO₂ avoided</span><b id="o-co2"></b></div>
+<div class="res"><span>Same as planting</span><b id="o-tree"></b></div>
+</div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="v-about" class="view">
+<h2>About DohaFlow</h2>
+<p class="muted" style="margin:8px 0 26px;max-width:64ch">DohaFlow is a student-built prototype for the MES Youth Hackathon 2026. It tackles one daily problem: hundreds of cars reaching one school gate in the same ten minutes.</p>
+<div class="grid g2" style="margin-bottom:30px">
+<div class="card"><h3>The problem</h3><p class="muted" style="margin-top:8px">Most school-run cars carry one child and arrive together. That creates queues on nearby roads, wastes fuel, and cuts into family mornings.</p></div>
+<div class="card"><h3>Our approach</h3><p class="muted" style="margin-top:8px">Two simple levers: put neighbours in the same car, and spread arrivals across short windows. Both work without new roads or buses.</p></div>
+<div class="card"><h3>Safety first</h3><p class="muted" style="margin-top:8px">Only parents verified through the school portal appear in matches. Children’s names and exact addresses are never shown, only the area and approximate distance.</p></div>
+<div class="card"><h3>Prototype notice</h3><p class="muted" style="margin-top:8px">Families, distances, and queue levels here are sample data. Nothing is sent to a server; your choices stay in this browser.</p></div>
+</div>
+<h2 style="margin-bottom:6px">Roadmap</h2>
+<div class="card road" style="margin:14px 0 30px">
+<div><span class="tag g">Built</span><span>Carpool matching, gate slots, impact simulator</span></div>
+<div><span class="tag w">Next</span><span>School portal sign-in and live seat availability</span></div>
+<div><span class="tag">Later</span><span>Live gate cameras for real queue data, and group chat for each carpool</span></div>
+</div>
+<h2 style="margin-bottom:6px">Frequently asked questions</h2>
+<div class="card" style="margin-top:14px">
+<details><summary>Is it free?</summary><p>Yes. DohaFlow doesn’t handle payments; families agree on fuel sharing between themselves.</p></details>
+<details><summary>How are families verified?</summary><p>In the full version, parents sign in with their school portal credentials. Unverified profiles are hidden unless you turn the filter off.</p></details>
+<details><summary>What if my child’s school isn’t listed?</summary><p>The prototype covers four schools. Adding a school only needs its gate windows and capacity.</p></details>
+<details><summary>How does the match score work?</summary><p>It combines how close the family is, how near your drop-off times are, and whether the children share a grade band.</p></details>
+<details><summary>Can I cancel a gate slot?</summary><p>Yes. Open Gate slots and choose Cancel reservation to free the space for another family.</p></details>
+</div>
+</section>
+</main>
+<footer>DohaFlow · built for the MES Youth Hackathon 2026 · prototype with sample data</footer>
+<div id="toast" role="status"></div>
+
+<script>
+var SCHOOLS=["MES Indian School","Stafford Sri Lankan School","Doha British School","Qatar Academy Doha"];
+var ZONES=["Al Thumama","Ain Khaled","Abu Hamour","Al Waab","Madinat Khalifa"];
+var NEAR={"Al Thumama":["Abu Hamour"],"Ain Khaled":["Abu Hamour"],"Abu Hamour":["Ain Khaled","Al Thumama","Al Waab"],"Al Waab":["Abu Hamour","Madinat Khalifa"],"Madinat Khalifa":["Al Waab"]};
+var DB=[
+{id:1,n:"Al-Mansoori family",z:"Al Thumama",s:SCHOOLS[0],t:"06:45",seats:2,ver:1,g:"1–5",d:280},
+{id:2,n:"Sharma family",z:"Al Thumama",s:SCHOOLS[0],t:"06:45",seats:1,ver:1,g:"6–8",d:420},
+{id:3,n:"Khan family",z:"Ain Khaled",s:SCHOOLS[0],t:"06:50",seats:3,ver:1,g:"1–5",d:190},
+{id:4,n:"Perera family",z:"Ain Khaled",s:SCHOOLS[1],t:"06:45",seats:2,ver:1,g:"KG",d:510},
+{id:5,n:"Al-Kuwari family",z:"Al Waab",s:SCHOOLS[2],t:"07:00",seats:2,ver:1,g:"9–12",d:150},
+{id:6,n:"Patel family",z:"Abu Hamour",s:SCHOOLS[0],t:"06:40",seats:2,ver:1,g:"1–5",d:340},
+{id:7,n:"Al-Haji family",z:"Al Thumama",s:SCHOOLS[0],t:"06:45",seats:2,ver:0,g:"1–5",d:600},
+{id:8,n:"Fernando family",z:"Abu Hamour",s:SCHOOLS[1],t:"06:45",seats:1,ver:1,g:"6–8",d:220},
+{id:9,n:"Nasser family",z:"Madinat Khalifa",s:SCHOOLS[3],t:"06:55",seats:3,ver:1,g:"9–12",d:310},
+{id:10,n:"Thomas family",z:"Al Waab",s:SCHOOLS[2],t:"06:50",seats:1,ver:1,g:"1–5",d:260}
+];
+var SLOTS=[["06:35 – 06:45",40,6],["06:45 – 06:55",28,14],["06:55 – 07:05",20,31],["07:05 – 07:15",36,8]];
+var S={cars:42,groups:14,joined:[],slot:-1,booked:[0,0,0,0]};
+var $=function(i){return document.getElementById(i)};
+try{var sv=JSON.parse(localStorage.getItem("dohaflow")||"null");if(sv)S=sv}catch(e){}
+function save(){try{localStorage.setItem("dohaflow",JSON.stringify(S))}catch(e){}}
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(function(){t.classList.remove("on")},2400)}
+function mins(t){var p=t.split(":");return +p[0]*60+ +p[1]}
+
+/* routing */
+var VIEWS=["home","carpool","slots","impact","about"];
+function route(){var h=(location.hash||"#home").slice(1);if(VIEWS.indexOf(h)<0)h="home";
+VIEWS.forEach(function(v){$("v-"+v).classList.toggle("on",v===h)});
+document.querySelectorAll("nav a").forEach(function(a){a.classList.toggle("on",a.dataset.v===h);a.removeAttribute("aria-current");if(a.dataset.v===h)a.setAttribute("aria-current","page")});
+window.scrollTo(0,0)}
+window.addEventListener("hashchange",route);
+
+/* home demo */
+var N=48;
+function demo(){var p=+$("share").value,gone=Math.round(N*p/100),h="";
+for(var i=0;i<N;i++)h+='<span class="car'+(i<gone?" shared":"")+'"></span>';
+$("lane").innerHTML=h;$("d-pct").textContent=p+"%";$("d-cars").textContent=(N-gone)+" cars";
+$("d-msg").textContent=p?("About "+Math.round(gone*0.4)+" minutes shorter wait at the gate, with "+gone+" fewer cars."):"Drag the slider to see how many cars leave the queue."}
+$("share").addEventListener("input",demo);
+
+function stats(){$("s-groups").textContent=S.groups;$("s-cars").textContent=S.cars;
+$("s-delay").textContent=Math.round(S.cars*.45);$("s-co2").textContent=(S.cars*2.3).toFixed(1)+" kg"}
+
+/* matcher */
+function fill(id,arr){$(id).innerHTML=arr.map(function(x){return"<option>"+x+"</option>"}).join("")}
+fill("school",SCHOOLS);fill("zone",ZONES);
+function score(f,zone,t,grade,pg){var s=0;
+s+=f.z===zone?45:(NEAR[zone]&&NEAR[zone].indexOf(f.z)>-1?25:0);
+var dt=Math.abs(mins(f.t)-mins(t));s+=Math.max(0,35-dt*3);
+s+=Math.max(0,12-f.d/60);
+if(pg&&grade!=="Any")s+=f.g===grade?8:0;else s+=4;
+return Math.min(99,Math.round(s))}
+function match(){var sc=$("school").value,zone=$("zone").value,t=$("time").value||"06:45",grade=$("grade").value,ver=$("f-ver").checked,pg=$("f-grade").checked;
+var list=DB.filter(function(f){return f.s===sc&&(!ver||f.ver)&&f.seats>0&&(f.z===zone||(NEAR[zone]||[]).indexOf(f.z)>-1)}).map(function(f){return{f:f,sc:score(f,zone,t,grade,pg)}}).sort(function(a,b){return b.sc-a.sc});
+$("r-title").textContent="Matches for "+sc+" from "+zone;$("r-count").textContent=list.length+(list.length===1?" family":" families");
+if(!list.length){$("results").innerHTML='<div class="card empty"><h3>No families found</h3><p class="muted" style="margin-top:6px">Try another area, or turn off “Verified parents only”.</p></div>';return}
+$("results").innerHTML=list.map(function(m){var f=m.f,j=S.joined.indexOf(f.id)>-1;
+return'<div class="card fam"><div class="score" style="--p:'+m.sc+'" data-v="'+m.sc+'%" title="Match score"></div><div class="info"><b>'+f.n+'</b> '+(f.ver?'<span class="tag g">Verified</span>':'<span class="tag w">Not verified</span>')+(f.z!==zone?' <span class="tag">Nearby area</span>':'')+'<div class="meta"><span>'+f.z+' · about '+f.d+' m away</span><span>Leaves '+f.t+'</span><span>Grade '+f.g+'</span><span>'+f.seats+(f.seats>1?" seats":" seat")+' open</span></div></div><button class="btn'+(j?" ghost":"")+'" data-id="'+f.id+'"'+(j?" disabled":"")+'>'+(j?"Joined":"Join carpool")+'</button></div>'}).join("")}
+$("go").addEventListener("click",match);
+["school","zone","time","grade","f-ver","f-grade"].forEach(function(i){$(i).addEventListener("change",match)});
+$("results").addEventListener("click",function(e){var b=e.target.closest("button[data-id]");if(!b)return;
+var f=DB.filter(function(x){return x.id==b.dataset.id})[0];if(!f||f.seats<1)return;
+f.seats--;S.joined.push(f.id);S.cars++;S.groups++;save();stats();match();toast("You joined the "+f.n+" carpool")});
+
+/* slots */
+function slots(){$("slot-list").innerHTML=SLOTS.map(function(s,i){var used=s[2]+S.booked[i]+(S.slot===i?0:0),pct=Math.min(100,Math.round(used/s[1]*100)),left=s[1]-used;
+var col=pct>85?"var(--bad)":pct>55?"var(--warn)":"var(--ok)",lab=pct>85?"Very busy":pct>55?"Busy":"Quiet";
+return'<div class="card slot'+(S.slot===i?" mine":"")+'"><div class="row"><h3>'+s[0]+'</h3><span class="tag'+(pct>85?" m":pct>55?" w":" g")+'">'+lab+'</span></div><div class="meter"><i style="width:'+pct+'%;background:'+col+'"></i></div><p class="small muted">'+pct+'% full · '+Math.max(0,left)+' spaces left</p><button class="btn'+(S.slot===i?" ghost":"")+'" data-i="'+i+'"'+(left<1&&S.slot!==i?" disabled":"")+'>'+(S.slot===i?"Reserved":left<1?"Full":"Reserve window")+'</button></div>'}).join("");
+$("bars").innerHTML=SLOTS.map(function(s,i){var v=Math.round((s[2]+S.booked[i])/s[1]*100);return'<div class="'+(S.slot===i?"b":"a")+'" style="height:'+Math.max(8,v)+'%" title="'+s[0]+'"></div>'}).join("");
+var on=S.slot>-1;$("pass").classList.toggle("on",on);
+if(on){var id="DF-"+(4000+S.slot*137+S.cars)+"-"+S.slot;$("pass-id").textContent=id;$("pass-t").textContent="Arrive between "+SLOTS[S.slot][0]+" AM.";qr(id)}}
+function qr(seed){var h=0,s="";for(var i=0;i<seed.length;i++)h=(h*31+seed.charCodeAt(i))>>>0;
+function f(x,y){var q=(x<7&&y<7)||(x>13&&y<7)||(x<7&&y>13);if(q){var lx=x%14>6?x-14:x,ly=y>13?y-14:y;return lx==0||lx==6||ly==0||ly==6||(lx>1&&lx<5&&ly>1&&ly<5)}
+if((x<8&&y<8)||(x>12&&y<8)||(x<8&&y>12))return false;h=(h*1103515245+12345+x*7+y)>>>0;return(h>>>16)%2==0}
+for(var y=0;y<21;y++)for(var x=0;x<21;x++)if(f(x,y))s+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="#1E1620"/>';$("qr").innerHTML=s}
+$("slot-list").addEventListener("click",function(e){var b=e.target.closest("button[data-i]");if(!b||b.disabled)return;
+var i=+b.dataset.i;if(S.slot>-1)S.booked[S.slot]=Math.max(0,S.booked[S.slot]-1);S.slot=i;S.booked[i]++;save();slots();toast("Window reserved: "+SLOTS[i][0])});
+$("cancel").addEventListener("click",function(){if(S.slot>-1)S.booked[S.slot]=Math.max(0,S.booked[S.slot]-1);S.slot=-1;save();slots();toast("Reservation cancelled")});
+
+/* simulator */
+function sim(){var s=+$("sc").value,a=+$("ad").value,c=+$("cp").value;
+$("sc-v").textContent=s;$("ad-v").textContent=a+"%";$("cp-v").textContent=c;
+var cars=Math.round(s*c*a/100*0.5),fuel=cars*180,t=fuel*2.3/1000;
+$("o-cars").textContent=cars.toLocaleString();$("o-fuel").textContent=fuel.toLocaleString()+" L";
+$("o-co2").textContent=t.toLocaleString(undefined,{maximumFractionDigits:1})+" t";$("o-tree").textContent=Math.round(t*1000/21).toLocaleString()+" trees"}
+["sc","ad","cp"].forEach(function(i){$(i).addEventListener("input",sim)});
+
+demo();stats();match();slots();sim();route();
+</script>
+</body>
+</html>
